@@ -57,7 +57,7 @@
 | 2 | 大纲含阶段划分、每阶段简述、自检/产出；中文为主、语言通顺 | 同上文件结构与正文 |
 | 3 | 若增加 README：一句定位 + 指向大纲的链接 | `README.md` |
 | 4 | 不引用尚不存在路径为「已有材料」；未来目录用「计划用于…」 | 大纲「仓库使用约定」与全文措辞 |
-| 5 | PR 含摘要、设计文档路径、维护提示、`Closes #2` | GitHub PR 描述 |
+| 5 | PR 含摘要、设计文档路径、维护提示、`Closes #2` | 代码已就绪；PR 需在 GitHub 上由有权限者创建（见 Self-review #5） |
 | 6 | 设计文档在 `docs/automation/issue-2-ai-learning-outline.md` | 本文件 |
 
 ---
@@ -70,5 +70,5 @@
 | 2 | 阶段 + 简述 + 自检；中文为主 | Pass | 大纲正文 |
 | 3 | README 定位 + 链接 | Pass | `README.md` |
 | 4 | 无虚假「已存在」链接 | Pass | 仅链接 `docs/ai-learning-outline.md`；约定段为计划表述 |
-| 5 | PR 元信息 + Closes #2 | Pass | 以 PR 模板填写为准 |
+| 5 | PR 元信息 + Closes #2 | Partial | 变更已推送至 `cursor/automation-delivery-workflow-9e13`；通过 `gh pr create` 创建 PR 时因 integration 无权限失败，需维护者在 GitHub 上手动发起 PR 并粘贴与本交付一致的描述（含 `Closes #2`） |
 | 6 | 设计文档路径与内容 | Pass | 本文件 |
