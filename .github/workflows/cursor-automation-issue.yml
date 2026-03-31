@@ -1,0 +1,42 @@
+name: Cursor automation — new issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  invoke-cursor-webhook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST issue to Cursor automation
+        env:
+          WEBHOOK_URL: ${{ secrets.CURSOR_AUTOMATION_WEBHOOK_URL }}
+          TOKEN: ${{ secrets.CURSOR_AUTOMATION_WEBHOOK_TOKEN }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          payload=$(jq -n --compact-output \
+            --arg title "$ISSUE_TITLE" \
+            --arg body "$ISSUE_BODY" \
+            --argjson number "$ISSUE_NUMBER" \
+            --arg url "$ISSUE_URL" \
+            --arg repo "$REPO" \
+            '{
+              source: "github-actions",
+              event: "issues.opened",
+              issue: {
+                title: $title,
+                body: $body,
+                number: $number,
+                html_url: $url,
+                repository: $repo
+              }
+            }')
+          curl -sS -f -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -d "$payload"
